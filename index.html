@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<!-- bootstrap CDN-->
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">  
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js">
+
+	<!--Leaflet code-->
+	<link rel="stylesheet" href="leaflet.css" />
+	    
+  	<!-- mapbox js cdn-->
+	<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
+
+	<!--frac geojson-->
+    <script src="geoJSON/location.js"></script>
+	
+	<!--jquery -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>	
+
+	<style type="text/css">
+        #map {
+			width: 100%;
+			height: 500px;
+		}
+
+		.info {
+			padding: 6px 6px;
+			font: 14px/16px Arial, Helvetica, sans-serif;
+			/*background: rgba(255,255,255,0.8);*/
+			background: white;
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px;
+			width: 200px;
+           /* height: 110px; */
+		}
+		.info h4 {
+			margin: 0 0 0px;
+			color: black;
+		}
+		/*
+		.legend {
+			text-align: left;
+			line-height: 18px;
+		}
+		.legend i {
+			width: 18px;
+			height: 18px;
+			float: left;
+			margin-right: 8px;
+			opacity: 1.0;
+		}
+		*/
+		.info strong {
+
+		}
+		
+		#slide-control .btn {
+			padding: 0px 0px; 
+			-moz-border-radius: 0; 
+			-webkit-border-radius: 0; 
+			border-radius: 0;
+			-khtml-border-radius: 0;
+			border: 0;
+			color: gray;
+		}
+		#slide-control .btn-primary {
+			background: white;
+		}
+		#slide-control .btn-primary:hover {
+			background: steelblue; 
+			color: white;}
+
+	</style>
+
+	<title>
+	Fracing in California
+	</title>
+</head>
+<body>
+<div class ="container-fluid">
+	<div class = "row">
+		<div class = "col-xs-12">
+			<h1>Waste Water Disposal Wells</h1>
+			<p>There are tens of thousands of oil wells in Central California. Generaly they're hard to spot and blend in easily with the agricultural landscape. But several of these wells have been used by oil companies to dump toxic wastewater, including waste water from fracking operations.<p>
+			<p>The state admits that in nine wells, oil and gas companies were allowed to dump that water in protected aquifers that could have been used by people to drink or irrigate.</p>
+            <p>Map by <a href="http://www.twitter.com/scottpham" target="_blank">Scott Pham</a>.</p>
+            
+			<div id="map"></p>
+		</p>
+	</p>
+</p>
+	
+
+<script src="main.js"></script>
+
+       
+
+</script>
+
+	
+</body>
+</html>
+
+
