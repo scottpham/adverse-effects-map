@@ -1,7 +1,8 @@
+var myRed = "#933F38";
 
-var wellLayer= L.geoJson(wellLocations, {
-  style: wellStyle,
-  onEachFeature: onEachWell,
+var hospitalLayer = L.geoJson(hospitals, {
+  style: hospitalStyle,
+  onEachFeature: onEachHospital,
   pointToLayer: function(feature,latlng){
     return L.circleMarker(latlng, null); //null options.  used style instead
   }
@@ -10,8 +11,8 @@ var wellLayer= L.geoJson(wellLocations, {
 //sets map to mountain view
 var map = L.map('map', {
 	scrollWheelZoom: false,
-	layers: [wellLayer]
-	}).setView([35.4, -118.7], 9);
+	layers: [hospitalLayer]
+	}).setView([37.0, -118.7], 6);
 	
 
 L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
@@ -27,25 +28,30 @@ L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
 //		10;	
 //}
 
+
+
 //layer style
-function wellStyle(feature) {
+function hospitalStyle(feature) {
   return {
-    radius: 18,
+    radius: 10,
 //	radius: getSize(feature.properties.water_injected),
-    fillColor: "steelblue",
-    color:"lightgrey",
-    weight: 1.5,
+    fillColor: myRed,
+    color:"white",
+    weight: .5,
     opacity: 1,
     fillOpacity: 0.65
   };
 }
 
 //bind click function to layer
-function onEachWell(feature, layer) {
+function onEachHospital(feature, layer) {
 	layer.on({
 		click: clickToControl
+		//add mouseover event here
 	});
-}
+};
+
+
 
 //begin control code//
 var info = L.control();
@@ -62,39 +68,59 @@ info.onAdd = function (map) {
 //sends click event to update control
 function clickToControl(e) {
 	var layer = e.target;
-	wellLayer.setStyle({color: "lightgrey", fillOpacity: 0.5});
-	e.target.popup
-	layer.setStyle({color: "red", fillOpacity: 1}); //highlight color
-	info.update(e.target);
-}
+	hospitalLayer.setStyle({fillColor: "gray"});
+	layer.setStyle({fillColor: myRed, fillOpacity: 1}); //highlight color
+	info.update(e.target.feature);
+};
 
-// Cribbed from http://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-function numberWithCommas(x) {
-    var parts = x.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
-}
+//if the target doesn't have feature data, then reset the color and send an undefined to the update, triggering the false condition, rendering default text
+function reset(e) {
+	// hospitalLayer.setStyle({color: "gray"});
+	if (!e.target.feature){
+		hospitalLayer.setStyle({fillColor: myRed});
+		info.update(e.target.feature);
+
+}};
+
+map.on('click', reset);
+
+
+function printEffects(properties){
+	//placeholder text
+	text = "";
+	//run 27 times
+	for (i=1; i < 28; i++){
+		//skip empty properties
+		if ( !properties[i]) continue;
+		//append text
+		text += '<p><strong>' + properties[i] + ': </strong>' + lookup[i] + '.</p>';
+	}
+	return text;
+};
 
 //updating the control
 info.update = function(data) {
-	var that = this; //passing scope
 
-	this._div.innerHTML = (data ? '<div class="target-info"><p>This well has injected <strong>' + numberWithCommas(data.feature.properties.water_injected) + "</strong> barrels of water into the ground.</p><p>It's an <strong>" + ((data.feature.properties.well_status == "I") ? "active" : "inactive") + "</strong> waste water disposal well.</p><p>It's leased by <strong>" + data.feature.properties.leasee + "</strong> and operated by <strong>" + data.feature.properties.operator + "</strong>.</p><p>The Department of Conservation's " + '"Well Finder" has <a href="' + data.feature.properties.url + '" target="blank">lots more info</a>.</p></div> <div id="slide-control" class="buttons btn-group btn-group-justified"> <a class="slide-up btn btn-primary"><span class="glyphicon glyphicon-chevron-up"> </span></a> <a class="slide-down btn btn-primary"> <span class="glyphicon glyphicon-chevron-down"></span></a> </div>' : "<h5><strong>Click a circle marker</strong></h5>");
+	this._div.innerHTML = (data ? ("<div class='target-info'><p><strong>" + data.id + "</strong></p><p>Total(FY11-13):<strong> " + data.properties.TOTAL + "</strong></p><p>" + printEffects(data.properties)) + '</div><div id="slide-control" class="buttons btn-group btn-group-justified"> <a class="slide-up btn btn-primary"><span class="glyphicon glyphicon-chevron-up"> </span></a> <a class="slide-down btn btn-primary"> <span class="glyphicon glyphicon-chevron-down"></span></a> </div>'
+		
+		: ("<p><strong>Click on a circle</strong></p>"));
 
 
-	//have to put this function here or won't render right
-	$(document).ready(function(){
-		$(".slide-up").click(function(){
-			$(".target-info").slideUp("slow");
-		});
+	// //have to put this function here or won't render right
+	// $(document).ready(function(){
+	// 	$(".slide-up").click(function(){
+	// 		$(".target-info").slideUp("slow");
+	// 	});
 
-		$(".slide-down").click(function(){
-			$(".target-info").slideDown("slow");
-		});	
-	});
+	// 	$(".slide-down").click(function(){
+	// 		$(".target-info").slideDown("slow");
+	// 	});
+
+
+	// });
 
 	
-};
+	};//end update
 
 info.addTo(map);
 

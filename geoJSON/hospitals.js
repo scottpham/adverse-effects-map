@@ -1,3 +1,31 @@
+var lookup = {
+  "1": "Surgery performed on a wrong body part",
+  "2": "Surgery performed on the wrong patient",
+  "3": "Wrong surgical procedure performed on a patient",
+  "4": "Retention of a foreign object in a patient",
+  "5": "Death during or up to 24 hours after surgery",
+  "6": "Death or serious disability associated with the use of contaminated drug, device, or biologic",
+  "7": "Death or serious disability associated with the use of a device other than as intended",
+  "8": "Death or serious disability due to intravascular air embolism",
+  "10": "Death or serious disability due to disappearance",
+  "11": "Suicide or attempted suicide",
+  "12": "Death or serious disability associated with a medication error",
+  "13": "Death or serious disability associated with incompatible blood",
+  "14": "Maternal death or serious disability associated with labor or delivery",
+  "15": "Death or serious disability directly related to hypoglycemia",
+  "16": "Death or serious disability associated with hyperbilirubinemia in neonates",
+  "17": "Stage 3 or 4 decubitus ulcer acquired after admission",
+  "20": "Oxygen line contains wrong or toxic gas",
+  "21": "Death or serious disability associated with a burn",
+  "22": "Death associated with a fall",
+  "23": "Death or serious disability associated with the use of restraints or bedrails",
+  "24": "Care provided by someone impersonating a licensed health provider",
+  "25": "Abduction of a patient of any age",
+  "26": "Sexual assault on a patient",
+  "27": "Death or significant injury from a physical assault",
+  "28": "Adverse event or series of adverse events"
+};
+
 var hospitals = {
     "type": "FeatureCollection", 
     "bbox": [
