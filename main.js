@@ -34,11 +34,9 @@ function hospitalStyle(feature) {
 //bind functions
 function onEachHospital(feature, layer) {
 
-	$(layer).on('mouseenter', popup)
-
 	layer.on({
-		mousedown: clickToControl,
-		click: clickToControl
+		click: clickToControl,
+		mouseover: popup
 	});
 }
 
@@ -57,9 +55,8 @@ info.onAdd = function (map) {
 //sends click event to update control
 function clickToControl(e) {
 	var layer = e.target;
-	console.log(e);
 	hospitalLayer.setStyle(hospitalStyle);
-	layer.setStyle({fillColor: myRed, fillOpacity: 1, color: "black", weight: 3}); //highlight color
+	layer.setStyle({fillColor: myRed, fillOpacity: 1, color: "black", weight: 3});
 	info.update(e.target.feature);
 };
 
@@ -73,7 +70,6 @@ function reset(e) {
 map.on('click', reset);
 
 function popup(e){
-	//console.log(e);
 	target = e.target;
 	var myPopup = L.popup()
 		.setLatLng(target._latlng)
