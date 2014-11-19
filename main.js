@@ -55,7 +55,7 @@ function popup(e){
 		offset: new L.Point(0,-10)
 		})
 		.setLatLng(target._latlng)
-		.setContent(target.feature.id);
+		.setContent(target.feature.id + "<br />(click for more info)");
 	map.openPopup(myPopup);
 }
 
@@ -81,7 +81,7 @@ function printEffects(properties){
 	//placeholder text
 	text = "";
 	//run 27 times
-	for (i=1; i < 28; i++){
+	for (i=1; i < 29; i++){
 		//skip empty properties
 		if ( !properties[i]) continue;
 		//append text
