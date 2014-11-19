@@ -34,12 +34,10 @@ function hospitalStyle(feature) {
 //bind click function to layer
 function onEachHospital(feature, layer) {
 	layer.on({
-		click: clickToControl
-		//add mouseover event here
+		click: clickToControl,
+		mouseover: popup
 	});
 };
-
-
 
 //begin control code//
 var info = L.control();
@@ -50,8 +48,16 @@ info.onAdd = function (map) {
 	return this._div;
 };
 
-
-//listeners
+//creates popup
+function popup(e){
+	target = e.target;
+	var myPopup = L.popup({
+		offset: new L.Point(0,-10)
+		})
+		.setLatLng(target._latlng)
+		.setContent(target.feature.id);
+	map.openPopup(myPopup);
+}
 
 //sends click event to update control
 function clickToControl(e) {
