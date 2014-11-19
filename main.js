@@ -87,9 +87,9 @@ function printEffects(properties){
 //updating the control
 info.update = function(data) {
 
-	this._div.innerHTML = (data ? ("<div class='target-info'><p><strong>" + data.id + "</strong></p><p>Total:<strong> " + data.properties.TOTAL + "</strong></p><p>" + printEffects(data.properties)) + '</div><div id="slide-control" class="buttons btn-group btn-group-justified"> <a class="slide-up btn btn-primary"><span class="glyphicon glyphicon-chevron-up"> </span></a> <a class="slide-down btn btn-primary"> <span class="glyphicon glyphicon-chevron-down"></span></a> </div>'
+	this._div.innerHTML = (data ? ("<div class='target-info'><h5><strong>" + data.id + "</strong></h5><p>Total:<strong> " + data.properties.TOTAL + "</strong></p><p>" + printEffects(data.properties)) + '</div><div id="slide-control" class="buttons btn-group btn-group-justified"> <a class="slide-up btn btn-primary"><span class="glyphicon glyphicon-chevron-up"> </span></a> </div>'
 		
-		: ("<p><strong>Click on a circle</strong></p>"));
+		: ("<h4><strong>Click on a circle</strong></h4>"));
 	
 };//end update
 
