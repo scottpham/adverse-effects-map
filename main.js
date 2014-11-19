@@ -8,7 +8,7 @@ var hospitalLayer = L.geoJson(hospitals, {
   }
 });
 
-//sets map to mountain view
+
 var map = L.map('map', {
 	scrollWheelZoom: false,
 	layers: [hospitalLayer]
@@ -19,8 +19,6 @@ L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
 }).addTo(map);
 
-
-
 //layer style
 function hospitalStyle(feature) {
   return {
@@ -29,7 +27,7 @@ function hospitalStyle(feature) {
     color:"white",
     weight: .5,
     opacity: 1,
-    fillOpacity: 0.65
+    fillOpacity: 0.7
   };
 }
 
@@ -58,18 +56,16 @@ info.onAdd = function (map) {
 //sends click event to update control
 function clickToControl(e) {
 	var layer = e.target;
-	hospitalLayer.setStyle({fillColor: "gray"});
-	layer.setStyle({fillColor: myRed, fillOpacity: 1}); //highlight color
+	hospitalLayer.setStyle(hospitalStyle);
+	layer.setStyle({fillColor: myRed, fillOpacity: 1, color: "black", weight: 3}); //highlight color
 	info.update(e.target.feature);
 };
 
 //if the target doesn't have feature data, then reset the color and send an undefined to the update, triggering the false condition, rendering default text
 function reset(e) {
-	// hospitalLayer.setStyle({color: "gray"});
 	if (!e.target.feature){
-		hospitalLayer.setStyle({fillColor: myRed});
+		hospitalLayer.setStyle(hospitalStyle);
 		info.update(e.target.feature);
-
 }};
 
 map.on('click', reset);
@@ -91,34 +87,11 @@ function printEffects(properties){
 //updating the control
 info.update = function(data) {
 
-	this._div.innerHTML = (data ? ("<div class='target-info'><p><strong>" + data.id + "</strong></p><p>Total(FY11-13):<strong> " + data.properties.TOTAL + "</strong></p><p>" + printEffects(data.properties)) + '</div><div id="slide-control" class="buttons btn-group btn-group-justified"> <a class="slide-up btn btn-primary"><span class="glyphicon glyphicon-chevron-up"> </span></a> <a class="slide-down btn btn-primary"> <span class="glyphicon glyphicon-chevron-down"></span></a> </div>'
+	this._div.innerHTML = (data ? ("<div class='target-info'><p><strong>" + data.id + "</strong></p><p>Total:<strong> " + data.properties.TOTAL + "</strong></p><p>" + printEffects(data.properties)) + '</div><div id="slide-control" class="buttons btn-group btn-group-justified"> <a class="slide-up btn btn-primary"><span class="glyphicon glyphicon-chevron-up"> </span></a> <a class="slide-down btn btn-primary"> <span class="glyphicon glyphicon-chevron-down"></span></a> </div>'
 		
 		: ("<p><strong>Click on a circle</strong></p>"));
-
-
-	// //have to put this function here or won't render right
-	// $(document).ready(function(){
-	// 	$(".slide-up").click(function(){
-	// 		$(".target-info").slideUp("slow");
-	// 	});
-
-	// 	$(".slide-down").click(function(){
-	// 		$(".target-info").slideDown("slow");
-	// 	});
-
-
-	// });
-
 	
-	};//end update
+};//end update
 
 info.addTo(map);
 
-/*helper function
-function findlocation(e) {
-	console.log("The lat and long is " + e.latlng);
-} 
-
-//instantiate helper finder function
-map.on('click', findlocation);
-*/
