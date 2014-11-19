@@ -19,22 +19,12 @@ L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
 	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
 }).addTo(map);
 
-//size function
-//function getSize(d){
-//	return d > 50520229 ? 30 :
-//		d > 4994335.25 ? 25 :
-//		d > 1797653 ? 20 :
-//		d > 1101964.25 ? 15 :
-//		10;	
-//}
-
 
 
 //layer style
 function hospitalStyle(feature) {
   return {
     radius: 10,
-//	radius: getSize(feature.properties.water_injected),
     fillColor: myRed,
     color:"white",
     weight: .5,
