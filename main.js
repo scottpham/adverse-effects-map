@@ -25,21 +25,22 @@ function hospitalStyle(feature) {
     radius: 10,
     fillColor: myRed,
     color:"white",
-    weight: .5,
+    weight: 0.5,
     opacity: 1,
     fillOpacity: 0.7
   };
 }
 
-//bind click function to layer
+//bind functions
 function onEachHospital(feature, layer) {
+
+	$(layer).on('mouseenter', popup)
+
 	layer.on({
+		mousedown: clickToControl,
 		click: clickToControl
-		//add mouseover event here
 	});
-};
-
-
+}
 
 //begin control code//
 var info = L.control();
@@ -56,6 +57,7 @@ info.onAdd = function (map) {
 //sends click event to update control
 function clickToControl(e) {
 	var layer = e.target;
+	console.log(e);
 	hospitalLayer.setStyle(hospitalStyle);
 	layer.setStyle({fillColor: myRed, fillOpacity: 1, color: "black", weight: 3}); //highlight color
 	info.update(e.target.feature);
@@ -70,6 +72,14 @@ function reset(e) {
 
 map.on('click', reset);
 
+function popup(e){
+	//console.log(e);
+	target = e.target;
+	var myPopup = L.popup()
+		.setLatLng(target._latlng)
+		.setContent(target.feature.id);
+	map.openPopup(myPopup);
+}
 
 function printEffects(properties){
 	//placeholder text
